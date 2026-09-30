@@ -43,7 +43,7 @@ function today() {
 
 function AttendancePage() {
   const [sem, setSem] = useState<Semester>(1);
-  const [subject, setSubject] = useState(SUBJECTS[1][0].code);
+  const [subject, setSubject] = useState(SUBJECTS[1][0]!.code);
   const [date, setDate] = useState(today);
   const [all, setAll] = useState<Record<string, Records>>({});
   const [saved, setSaved] = useState(false);
@@ -71,7 +71,7 @@ function AttendancePage() {
     const keys = Object.keys(all).filter((k) => k.startsWith(`${sem}|${subject}|`));
     const marked = keys.filter((k) => all[k]?.[roll]);
     if (marked.length === 0) return null;
-    const p = marked.filter((k) => all[k][roll] === "present").length;
+    const p = marked.filter((k) => all[k]![roll] === "present").length;
     return Math.round((p / marked.length) * 100);
   };
 
@@ -126,7 +126,7 @@ function AttendancePage() {
                 onChange={(e) => {
                   const next = Number(e.target.value) as Semester;
                   setSem(next);
-                  setSubject(SUBJECTS[next][0].code);
+                  setSubject(SUBJECTS[next][0]!.code);
                 }}
                 className="rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring"
               >
